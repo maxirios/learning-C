@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "sensor_msg.h"
+// #include "sensor_msg.h"
 
 int main(void) {
 	sensor_msg_t msg;
