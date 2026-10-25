@@ -26,38 +26,42 @@ Small C exercises to learn the language from scratch, coming from MicroPython. E
 
 ## Building
 
-Executables always go to `build/`, which is git-ignored:
+The `Makefile` builds every exercise into `build/`, which is git-ignored:
 
 ```bash
-mkdir -p build
-gcc -Wall -Wextra 01-fixed-width-numbers.c -o build/01-fixed-width-numbers
+make                # all top-level exercises + 12-headers and 13-static
+make asm            # assembly output for 16-volatile (it has no main)
+make clean          # remove build/
 ./build/01-fixed-width-numbers
 ```
 
-Multi-file exercises (`12-headers/`, `13-static/`) need every `.c` on the command line:
+To build with AddressSanitizer (useful for 17-malloc-free):
+
+```bash
+make clean
+make EXTRA=-fsanitize=address
+setarch -R ./build/17-malloc-free
+```
+
+`make clean` first is needed because `make` doesn't notice flag changes.
+`setarch -R` disables ASLR for that run: with GCC 12 and recent kernels,
+ASan can crash intermittently without it.
+
+Single exercises can still be built by hand:
+
+```bash
+gcc -Wall -Wextra 01-fixed-width-numbers.c -o build/01-fixed-width-numbers
+```
+
+Multi-file exercises need every `.c` on the command line:
 
 ```bash
 cd 12-headers
 gcc -Wall -Wextra main.c sensor_msg.c -o ../build/12-headers
 ```
 
-`16-volatile/` has no `main`; it is compiled to assembly only:
-
-```bash
-gcc -O2 -S wait_for_flag.c -o wait_for_flag.s
-```
-
-Memory exercises (17) are checked with AddressSanitizer:
-
-```bash
-gcc -Wall -Wextra -g -fsanitize=address 17-malloc-free.c -o build/17-malloc-free
-setarch -R ./build/17-malloc-free
-```
-
-`setarch -R` disables ASLR for that run. With GCC 12 and recent kernels,
-ASan can crash intermittently without it.
-
 ## Conventions
 
+- Run `make` before committing: every exercise in the repo should compile.
 - Commits that only try something to see a compiler/linker/ASan error are
   prefixed with `Experiment:`.
