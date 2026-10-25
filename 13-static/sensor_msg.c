@@ -1,6 +1,6 @@
 #include "sensor_msg.h"
 
-static uint8_t is_valid_type(int8_t type){
+uint8_t is_valid_type(int8_t type){
 	return type <= SENSOR_LIGHT;
 }
 
