@@ -8,7 +8,7 @@ void count_call(void) {
 
 int main(void) {
 	const int limit = 3;
-	limit = 5;
+	// limit = 5; will result in an error
 
 	for (int i = 0; i < limit; i++) {
 		count_call();
