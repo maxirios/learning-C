@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 void count_call(void) {
-	static int calls = 0;
+	int calls = 0;
 	calls++;
 	printf("calls: %d\n", calls);
 }
