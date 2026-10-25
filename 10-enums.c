@@ -10,7 +10,7 @@ typedef enum {
 
 typedef struct {
 	uint8_t node_id;
-	sensor_type_t type;
+	uint8_t type;
 	float value;
 } sensor_msg_t;
 
